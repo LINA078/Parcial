@@ -114,27 +114,28 @@ int casoUno() {
 
 int casoDos() {
     if(aux != raiz) ubicarPadre(raiz);
-    nodo* hijo = (aux->izq != NULL) ? aux->izq : aux->der;
-    if(aux2->izq == aux) aux2->izq = hijo;
-    else if(aux2->der == aux) aux2->der = hijo;
-    else raiz = hijo;
+    aux = (aux->izq !=NULL ) ? aux->izq : aux->der;
+    if(aux2->izq == aux) aux2->izq = aux;
+    else if(aux2->der == aux) aux2->der = aux;
+    else raiz = aux;
     free(aux);
     aux = NULL;
     return 0;
 }
 
 int casoTres() {
-    nodo *sucesor = aux->der;
-    nodo *padreSucesor = aux;
-    while(sucesor->izq != NULL) {
-        padreSucesor = sucesor;
-        sucesor = sucesor->izq;
+    aux2 = aux;
+   aux = aux->der;
+    while(aux->izq != NULL) {
+       aux2 = aux;
+    aux = aux->izq;
     }
-    aux->edad = sucesor->edad;
-    aux->doc = sucesor->doc;
-    if(sucesor == aux->der) aux->der = sucesor->der;
-    else padreSucesor->izq = sucesor->der;
-    free(sucesor);
+    aux2->edad = aux->edad;
+    aux->doc = aux->doc;
+    if(aux2->izq==aux) aux2->izq = aux->der;
+    else aux2->der = aux->der;
+    free(aux);
+    aux = NULL;
     return 0;
 }
 
